@@ -3,6 +3,7 @@
 import rospy
 from sensor_msgs.msg import Image
 from person_recognition.srv import FaceVerification, FaceVerificationRequest
+from std_msgs.msg import String
 
 def image_callback(msg):
     # Call the face verification service
@@ -25,10 +26,23 @@ def image_callback(msg):
     
     rospy.signal_shutdown("Image processed, exiting...")
 
+def name_callback(msg):
+    global name
+    name = msg.data
+
+def drink_callback(msg):
+    global favorite_drink
+    favorite_drink = msg.data
+
+
 def face_verification_client():
     rospy.init_node("face_verification_client")
     image_topic = "/camera/color/image_raw"
+    name_topic = "/person_name"
+    drink_topic = "/favorite_drink"
     rospy.Subscriber(image_topic, Image, image_callback)
+    rospy.Subscriber(name_topic, String, name_callback)
+    rospy.Subscriber(drink_topic, String, drink_callback)
     rospy.spin()
 
 if __name__ == "__main__":
