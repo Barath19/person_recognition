@@ -1,0 +1,9 @@
+# Request message
+sensor_msgs/Image image
+string operation  # "add" or "verify"
+string name  # Name for the "add" operation
+string favorite_drink  # Favorite drink for the "add" operation
+---
+# Response message
+bool success
+string message
